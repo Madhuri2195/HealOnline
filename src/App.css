@@ -1,0 +1,114 @@
+/* Page Header - keep as is */
+.page-header {
+  background-color: #1e40af; /* blue */
+  color: white;               /* white text */
+  text-align: center;
+  padding: 25px 0;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Center login card below header */
+.login-wrapper {
+  display: flex;
+  justify-content: center;      /* horizontal center */
+  align-items: center;          /* vertical center */
+  height: calc(100vh - 80px);   /* full height minus header */
+  background-color: #f0f5ff;    /* light blue background */
+  padding: 20px;
+}
+
+/* Login card */
+.panel {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+/* Welcome text inside card */
+.panel h1 {
+  color: #1e40af; /* blue welcome text */
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.text-gray-1000 {
+  color: #1e293b;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Inputs */
+.input {
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #1e40af;
+  box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.2);
+}
+.input + .input {
+  margin-top: 12px; /* space between inputs */
+}
+
+/* Button */
+.btn {
+  background-color: #1e40af;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  margin-top: 10px; /* ensures button below password */
+}
+
+.btn:hover {
+  background-color: #1e3a8a;
+}
+
+/* Sign Up link */
+.text-center {
+  text-align: center;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-gray-600 {
+  color: #64748b;
+}
+
+/* Optional: adjust spacing of the sign-up link */
+.panel p.text-sm {
+  margin-top: 15px;
+}
+
+
