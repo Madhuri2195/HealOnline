@@ -34,12 +34,11 @@ const Appointment = () => {
 
     const appointments = JSON.parse(localStorage.getItem("appointments") || "[]");
 
-    // ✅ normalize doctor name (case-insensitive, trimmed)
     const normalizedDoctorName = doctorName.toLowerCase().replace(/\s+/g, "");
 
     appointments.push({
-      doctor: normalizedDoctorName, // store normalized name
-      doctorDisplayName: doctorName, // keep original for display
+      doctor: normalizedDoctorName,
+      doctorDisplayName: doctorName,
       patientName,
       patientEmail: user.email,
       age,
@@ -61,138 +60,171 @@ const Appointment = () => {
       style={{
         minHeight: "100vh",
         padding: "20px",
-        background: "url('/home-background.jpg') no-repeat center center",
-        backgroundSize: "cover",
+        background: "linear-gradient(135deg, #e0f2fe, #eef2ff)",
       }}
     >
+      {/* HEADER */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           padding: "20px",
-          backgroundColor: "rgba(30, 64, 175, 0.9)",
+          background: "linear-gradient(135deg, #0a4d68, #00afc1)",
           color: "white",
-          borderRadius: "8px",
-          marginBottom: "20px",
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          borderRadius: "12px",
+          marginBottom: "25px",
+          boxShadow: "0 15px 40px rgba(0,0,0,0.25)",
         }}
       >
         <button
           onClick={() => navigate("/doctors")}
           style={{
             backgroundColor: "white",
-            color: "#1e40af",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "8px",
             cursor: "pointer",
-            fontWeight: "bold",
+            fontWeight: "600",
           }}
         >
-          Back
+          ⬅ Back
         </button>
 
-        <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>Book Appointment</h1>
+        <h1 style={{ fontSize: "1.8rem", fontWeight: "700" }}>Book Appointment</h1>
 
         <button
           onClick={handleLogout}
           style={{
             backgroundColor: "white",
-            color: "#1e40af",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "8px",
             cursor: "pointer",
-            fontWeight: "bold",
+            fontWeight: "600",
           }}
         >
           Logout
         </button>
       </div>
 
+      {/* Title */}
       <p
         style={{
           textAlign: "center",
           fontSize: "1.2rem",
-          fontWeight: "bold",
-          color: "#000",
+          fontWeight: "600",
+          color: "#0a4d68",
           marginBottom: "25px",
         }}
       >
-        Booking Appointment for <span style={{ color: "#1e40af" }}>{doctorName}</span>
+        Booking Appointment for{" "}
+        <span style={{ color: "#00afc1" }}>{doctorName}</span>
       </p>
 
+      {/* FORM CARD */}
       <div
         style={{
           maxWidth: "500px",
           margin: "0 auto",
-          padding: "25px",
-          backgroundColor: "white",
-          borderRadius: "12px",
-          boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
+          padding: "30px",
+          background: "#ffffff",
+          borderRadius: "18px",
+          boxShadow: "0 18px 45px rgba(15, 23, 42, 0.25)",
         }}
       >
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <form
+          onSubmit={handleSubmit}
+          style={{ display: "flex", flexDirection: "column", gap: "14px" }}
+        >
           <input
             type="text"
             value={doctorName}
             readOnly
             style={{
-              padding: "12px",
-              borderRadius: "6px",
+              padding: "14px",
+              borderRadius: "10px",
               border: "1px solid #cbd5e1",
-              fontWeight: "bold",
+              fontWeight: "600",
             }}
           />
+
           <input
             type="text"
             placeholder="Patient Name"
             value={patientName}
             onChange={(e) => setPatientName(e.target.value)}
-            style={{ padding: "12px", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+            style={{
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+            }}
           />
+
           <input
             type="number"
             placeholder="Age"
             value={age}
             onChange={(e) => setAge(e.target.value)}
-            style={{ padding: "12px", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+            style={{
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+            }}
           />
+
           <select
             value={gender}
             onChange={(e) => setGender(e.target.value)}
-            style={{ padding: "12px", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+            style={{
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+            }}
           >
             <option value="">Select Gender</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </select>
+
           <input
             type="text"
             placeholder="Health Issue / Symptoms"
             value={issue}
             onChange={(e) => setIssue(e.target.value)}
-            style={{ padding: "12px", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+            style={{
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+            }}
           />
+
           <input
             type="text"
             placeholder="Phone Number"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            style={{ padding: "12px", borderRadius: "6px", border: "1px solid #cbd5e1" }}
+            style={{
+              padding: "14px",
+              borderRadius: "10px",
+              border: "1px solid #cbd5e1",
+            }}
           />
+
+          {/* SUBMIT BUTTON */}
           <button
             type="submit"
             style={{
-              backgroundColor: "#1e40af",
+              background: "linear-gradient(135deg, #0a4d68, #00afc1)",
               color: "white",
-              border: "none",
-              padding: "12px",
-              borderRadius: "6px",
+              padding: "14px",
+              borderRadius: "999px",
               cursor: "pointer",
-              fontWeight: "bold",
+              fontWeight: "700",
+              boxShadow: "0 14px 32px rgba(0,175,193,0.55)",
               marginTop: "10px",
             }}
           >

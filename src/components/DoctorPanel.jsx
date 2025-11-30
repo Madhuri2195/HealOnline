@@ -5,13 +5,14 @@ const DoctorPanel = () => {
   const navigate = useNavigate();
   const doctor = JSON.parse(localStorage.getItem("user") || "{}");
   const [appointments, setAppointments] = useState([]);
-  const [givenResponses, setGivenResponses] = useState([]);
 
   useEffect(() => {
     const allAppointments = JSON.parse(localStorage.getItem("appointments") || "[]");
 
-    // Normalize doctor name for reliable matching
-    const doctorName = doctor.email?.split("@")[0]?.toLowerCase().replace(/^dr\.?/, "dr.");
+    const doctorName = doctor.email
+      ?.split("@")[0]
+      ?.toLowerCase()
+      .replace(/^dr\.?/, "dr.");
 
     const doctorAppointments = allAppointments.filter((a) => {
       const doc1 = a.doctor?.toLowerCase().replace(/\s+/g, "");
@@ -23,11 +24,6 @@ const DoctorPanel = () => {
     });
 
     setAppointments(doctorAppointments);
-
-    const completed = doctorAppointments.filter(
-      (a) => a.response || a.prescription
-    );
-    setGivenResponses(completed);
   }, [doctor.email]);
 
   const handleLogout = () => {
@@ -53,21 +49,11 @@ const DoctorPanel = () => {
 
     localStorage.setItem("appointments", JSON.stringify(updatedAppointments));
 
-    alert("✅ Response & Prescription submitted successfully!");
+    alert("Response & Prescription submitted!");
 
-    const updatedDoctorAppointments = updatedAppointments.filter((a) => {
-      const doc1 = a.doctor?.toLowerCase().replace(/\s+/g, "");
-      const doc2 = a.doctorDisplayName?.toLowerCase().replace(/\s+/g, "");
-      return (
-        doc1.includes(doctor.email?.split("@")[0]?.replace(/\s+/g, "")) ||
-        doc2.includes(doctor.email?.split("@")[0]?.replace(/\s+/g, ""))
-      );
-    });
-
-    setAppointments(updatedDoctorAppointments);
-    setGivenResponses(
-      updatedDoctorAppointments.filter((a) => a.response || a.prescription)
-    );
+    // REMOVE the submitted appointment from doctor panel view
+    const remaining = appointments.filter((_, i) => i !== index);
+    setAppointments(remaining);
   };
 
   return (
@@ -75,41 +61,43 @@ const DoctorPanel = () => {
       style={{
         minHeight: "100vh",
         padding: "20px",
-        background: "url('/home-background.jpg') no-repeat center center",
-        backgroundSize: "cover",
+        background:
+          "radial-gradient(circle at top right, #eef8ff 0, #e8faff 45%, #dbeafe 100%)",
       }}
     >
-      {/* Header */}
+      {/* HEADER */}
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
           padding: "20px",
-          backgroundColor: "rgba(30, 64, 175, 0.9)",
+          background: "linear-gradient(90deg, #0a4d68, #00afc1, #7fe7dc)",
           color: "white",
-          borderRadius: "8px",
-          marginBottom: "20px",
+          borderRadius: "12px",
+          marginBottom: "25px",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.20)",
         }}
       >
-        <h1>Doctor Panel</h1>
+        <h1 style={{ fontSize: "1.8rem", fontWeight: "700" }}>Doctor Dashboard</h1>
+
         <button
           onClick={handleLogout}
           style={{
             backgroundColor: "white",
-            color: "#1e40af",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "6px",
             cursor: "pointer",
-            fontWeight: "bold",
+            fontWeight: "600",
           }}
         >
           Logout
         </button>
       </div>
 
-      {/* Appointments */}
+      {/* APPOINTMENT CARDS */}
       <div
         style={{
           display: "flex",
@@ -119,126 +107,93 @@ const DoctorPanel = () => {
         }}
       >
         {appointments.length === 0 ? (
-          <p style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#1e40af" }}>
-            No appointments found for you.
+          <p style={{ fontSize: "1.3rem", fontWeight: "600", color: "#0a4d68" }}>
+            No appointments found.
           </p>
         ) : (
           appointments.map((app, index) => (
             <div
               key={index}
               style={{
-                backgroundColor: "white",
+                background: "white",
                 padding: "20px",
-                borderRadius: "12px",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
-                width: "90%",
+                borderRadius: "14px",
+                boxShadow: "0 8px 20px rgba(0,0,0,0.12)",
+                width: "95%",
                 maxWidth: "550px",
               }}
             >
-              <h3 style={{ color: "#1e40af", fontWeight: "bold" }}>
+              <h3
+                style={{
+                  color: "#0a4d68",
+                  fontWeight: "700",
+                  marginBottom: "8px",
+                }}
+              >
                 Patient: {app.patientName}
               </h3>
+
               <p><strong>Age:</strong> {app.age}</p>
               <p><strong>Gender:</strong> {app.gender}</p>
               <p><strong>Issue:</strong> {app.issue}</p>
               <p><strong>Date:</strong> {app.date}</p>
 
-              <div style={{ marginTop: "10px" }}>
-                <label style={{ fontWeight: "bold" }}>Response:</label>
-                <textarea
-                  value={app.response || ""}
-                  onChange={(e) =>
-                    handleResponseChange(index, "response", e.target.value)
-                  }
-                  rows="3"
-                  style={{
-                    width: "100%",
-                    marginTop: "5px",
-                    padding: "8px",
-                    borderRadius: "6px",
-                    border: "1px solid #ccc",
-                  }}
-                />
+              {/* RESPONSE */}
+              <label style={{ fontWeight: "600", marginTop: "10px" }}>Response:</label>
+              <textarea
+                value={app.response || ""}
+                onChange={(e) =>
+                  handleResponseChange(index, "response", e.target.value)
+                }
+                rows="3"
+                style={{
+                  width: "100%",
+                  marginTop: "5px",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  border: "1px solid #cbd5e1",
+                }}
+              />
 
-                <label
-                  style={{ fontWeight: "bold", marginTop: "10px", display: "block" }}
-                >
-                  Prescription:
-                </label>
-                <textarea
-                  value={app.prescription || ""}
-                  onChange={(e) =>
-                    handleResponseChange(index, "prescription", e.target.value)
-                  }
-                  rows="3"
-                  style={{
-                    width: "100%",
-                    marginTop: "5px",
-                    padding: "8px",
-                    borderRadius: "6px",
-                    border: "1px solid #ccc",
-                  }}
-                />
+              {/* PRESCRIPTION */}
+              <label style={{ fontWeight: "600", marginTop: "10px" }}>
+                Prescription:
+              </label>
+              <textarea
+                value={app.prescription || ""}
+                onChange={(e) =>
+                  handleResponseChange(index, "prescription", e.target.value)
+                }
+                rows="3"
+                style={{
+                  width: "100%",
+                  marginTop: "5px",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  border: "1px solid #cbd5e1",
+                }}
+              />
 
-                <button
-                  onClick={() => handleSubmitResponse(index)}
-                  style={{
-                    marginTop: "10px",
-                    backgroundColor: "#1e40af",
-                    color: "white",
-                    border: "none",
-                    padding: "10px 18px",
-                    borderRadius: "5px",
-                    cursor: "pointer",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Submit Response
-                </button>
-              </div>
+              <button
+                onClick={() => handleSubmitResponse(index)}
+                style={{
+                  marginTop: "10px",
+                  background: "linear-gradient(135deg, #0a4d68, #00afc1)",
+                  color: "white",
+                  padding: "12px",
+                  border: "none",
+                  borderRadius: "999px",
+                  fontWeight: "700",
+                  cursor: "pointer",
+                  boxShadow: "0 10px 25px rgba(0,175,193,0.35)",
+                }}
+              >
+                Submit Response
+              </button>
             </div>
           ))
         )}
       </div>
-
-      {/* Responses Section */}
-      {givenResponses.length > 0 && (
-        <div style={{ marginTop: "40px", textAlign: "center" }}>
-          <h2 style={{ color: "#1e40af", fontWeight: "bold", marginBottom: "20px" }}>
-            Responses Given
-          </h2>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-              alignItems: "center",
-            }}
-          >
-            {givenResponses.map((resp, idx) => (
-              <div
-                key={idx}
-                style={{
-                  backgroundColor: "white",
-                  padding: "20px",
-                  borderRadius: "12px",
-                  boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
-                  width: "90%",
-                  maxWidth: "550px",
-                }}
-              >
-                <h3 style={{ color: "#1e40af", fontWeight: "bold" }}>
-                  Patient: {resp.patientName}
-                </h3>
-                <p><strong>Issue:</strong> {resp.issue}</p>
-                <p><strong>Response:</strong> {resp.response || "N/A"}</p>
-                <p><strong>Prescription:</strong> {resp.prescription || "N/A"}</p>
-                <p><strong>Date:</strong> {resp.date}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 };

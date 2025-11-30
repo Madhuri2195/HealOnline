@@ -13,137 +13,160 @@ const Doctors = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.removeItem("user"); // clear user
-    navigate("/");                   // navigate to login
+    localStorage.removeItem("user");
+    navigate("/");
   };
 
   return (
     <div
-      className="doctors-wrapper"
+      className="home-wrapper"
       style={{
         minHeight: "100vh",
         padding: "20px",
-        background: "url('/home-background.jpg') no-repeat center center",
-        backgroundSize: "cover",
+        background:
+          "radial-gradient(circle at top right, #eef8ff, #e8faff 40%, #dbeafe 100%)",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
       }}
     >
-      {/* Header with Back & Logout */}
+      {/* ===== TOP BANNER (same style as Home) ===== */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "20px",
-          backgroundColor: "rgba(30, 64, 175, 0.9)",
+          padding: "24px 20px",
+          background: "linear-gradient(135deg, #0a4d68, #00afc1)",
           color: "white",
-          borderRadius: "8px",
-          marginBottom: "20px",
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          borderRadius: "18px",
+          marginBottom: "4px",
+          boxShadow: "0 12px 32px rgba(0, 175, 193, 0.35)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "16px",
         }}
       >
         <button
           onClick={() => navigate("/home")}
           style={{
-            backgroundColor: "white",
-            color: "#1e40af",
+            backgroundColor: "#ffffff",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "999px",
             cursor: "pointer",
-            fontWeight: "bold",
+            fontWeight: 600,
+            boxShadow: "0 6px 14px rgba(0,0,0,0.18)",
           }}
         >
           Back
         </button>
 
-        <h1 style={{ fontSize: "1.8rem", fontWeight: "bold" }}>Our Doctors</h1>
+        <div style={{ textAlign: "center", flex: 1 }}>
+          <h1 style={{ fontSize: "1.9rem", fontWeight: 700, marginBottom: "4px" }}>
+            Our Doctors
+          </h1>
+          <p style={{ fontSize: "0.95rem", opacity: 0.9 }}>
+            Find trusted doctors and book your appointment instantly
+          </p>
+        </div>
 
         <button
           onClick={handleLogout}
           style={{
-            backgroundColor: "white",
-            color: "#1e40af",
+            backgroundColor: "#ffffff",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "999px",
             cursor: "pointer",
-            fontWeight: "bold",
+            fontWeight: 600,
+            boxShadow: "0 6px 14px rgba(0,0,0,0.18)",
           }}
         >
           Logout
         </button>
       </div>
 
-      {/* Subtitle */}
-      <p
-        style={{
-          textAlign: "center",
-          fontSize: "1.8rem",
-          fontWeight: "bold",
-          color: "black",
-          marginBottom: "10px",
-        }}
-      >
-        Find Trusted doctors near you
-      </p>
-      <p
-        style={{
-          textAlign: "center",
-          fontSize: "1.2rem",
-          fontWeight: "500",
-          color: "black",
-          marginBottom: "25px",
-        }}
-      >
-        You can now book your appointment
-      </p>
+      {/* ===== SUBTITLE UNDER BANNER (centered like dashboard) ===== */}
+      <div style={{ textAlign: "center", marginBottom: "10px" }}>
+        
+        <p
+          style={{
+            fontSize: "1rem",
+            color: "#334155",
+          }}
+        >
+          You can book your appointment instantly
+        </p>
+      </div>
 
-      {/* Doctor Cards */}
+      {/* ===== DOCTOR CARDS (layout same, colors themed) ===== */}
       <div
         style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "20px",
+          gap: "22px",
           justifyContent: "center",
         }}
       >
         {doctorsList.map((doc) => (
           <div
             key={doc.name}
-            className="card"
             style={{
-              backgroundColor: "white",
-              padding: "25px",
-              borderRadius: "12px",
-              boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
-              width: "220px",
+              backgroundColor: "#ffffff",
+              padding: "24px",
+              borderRadius: "18px",
+              boxShadow: "0 12px 30px rgba(15,23,42,0.12)",
+              width: "230px",
               textAlign: "center",
-              transition: "0.3s",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease",
+              border: "1px solid #e3fdfc",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-4px)";
+              e.currentTarget.style.boxShadow =
+                "0 16px 40px rgba(0,175,193,0.35)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.boxShadow =
+                "0 12px 30px rgba(15,23,42,0.12)";
             }}
           >
             <h3
               style={{
                 fontSize: "1.2rem",
-                fontWeight: "600",
-                color: "#1e40af",
-                marginBottom: "10px",
+                fontWeight: 700,
+                color: "#0a4d68",
+                marginBottom: "6px",
               }}
             >
               {doc.name}
             </h3>
-            <p style={{ color: "#64748b", marginBottom: "15px" }}>
+
+            <p
+              style={{
+                color: "#64748b",
+                marginBottom: "16px",
+                fontSize: "0.95rem",
+              }}
+            >
               {doc.specialization}
             </p>
+
             <button
-              onClick={() => navigate("/appointment", { state: { doctor: doc.name } })}
+              onClick={() =>
+                navigate("/appointment", { state: { doctor: doc.name } })
+              }
               style={{
-                backgroundColor: "#1e40af",
+                background: "linear-gradient(135deg, #0a4d68, #00afc1)",
                 color: "white",
                 border: "none",
-                padding: "10px 15px",
-                borderRadius: "5px",
+                padding: "10px 18px",
+                borderRadius: "999px",
                 cursor: "pointer",
-                fontWeight: "bold",
+                fontWeight: 600,
+                boxShadow: "0 10px 24px rgba(0,175,193,0.45)",
               }}
             >
               Book Appointment

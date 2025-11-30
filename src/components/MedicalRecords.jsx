@@ -36,8 +36,7 @@ const MedicalRecords = () => {
       style={{
         minHeight: "100vh",
         padding: "20px",
-        background: "url('/home-background.jpg') no-repeat center center",
-        backgroundSize: "cover",
+        background: "radial-gradient(circle at top right, #eef8ff 0, #e8faff 45%, #dbeafe 100%)",
       }}
     >
       {/* Header */}
@@ -47,21 +46,21 @@ const MedicalRecords = () => {
           justifyContent: "space-between",
           alignItems: "center",
           padding: "20px",
-          backgroundColor: "rgba(30, 64, 175, 0.9)",
+          background: "linear-gradient(135deg, #0a4d68, #00afc1, #7fe7dc)",
           color: "white",
-          borderRadius: "8px",
-          marginBottom: "20px",
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+          borderRadius: "16px",
+          marginBottom: "30px",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
         }}
       >
         <button
           onClick={() => navigate("/home")}
           style={{
             backgroundColor: "white",
-            color: "#1e40af",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "8px",
             cursor: "pointer",
             fontWeight: "bold",
           }}
@@ -77,10 +76,10 @@ const MedicalRecords = () => {
           onClick={handleLogout}
           style={{
             backgroundColor: "white",
-            color: "#1e40af",
+            color: "#0a4d68",
             border: "none",
             padding: "10px 18px",
-            borderRadius: "5px",
+            borderRadius: "8px",
             cursor: "pointer",
             fontWeight: "bold",
           }}
@@ -91,19 +90,18 @@ const MedicalRecords = () => {
 
       {/* Clear All Records */}
       {records.length > 0 && (
-        <div
-          style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}
-        >
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: "20px" }}>
           <button
             onClick={handleClearRecords}
             style={{
-              backgroundColor: "red",
+              backgroundColor: "#dc2626",
               color: "white",
               padding: "10px 20px",
               border: "none",
-              borderRadius: "5px",
+              borderRadius: "8px",
               cursor: "pointer",
               fontWeight: "bold",
+              boxShadow: "0 6px 16px rgba(220,38,38,0.4)",
             }}
           >
             Clear All Records
@@ -121,7 +119,7 @@ const MedicalRecords = () => {
         }}
       >
         {records.length === 0 ? (
-          <p style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#1e40af" }}>
+          <p style={{ fontSize: "1.2rem", fontWeight: "bold", color: "#0a4d68" }}>
             No medical records found.
           </p>
         ) : (
@@ -131,35 +129,28 @@ const MedicalRecords = () => {
               style={{
                 backgroundColor: "white",
                 padding: "20px",
-                borderRadius: "12px",
-                boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
+                borderRadius: "16px",
+                boxShadow: "0 12px 35px rgba(0,0,0,0.12)",
                 width: "90%",
-                maxWidth: "500px",
+                maxWidth: "520px",
+                border: "1px solid #e3fdfc",
               }}
             >
               <h3
                 style={{
                   fontWeight: "bold",
-                  fontSize: "1.2rem",
-                  color: "#1e40af",
+                  fontSize: "1.3rem",
+                  color: "#0a4d68",
+                  marginBottom: "10px",
                 }}
               >
                 Doctor: {rec.doctorDisplayName || rec.doctor}
               </h3>
-              <p>
-                <strong>Issue / Symptoms:</strong> {rec.issue}
-              </p>
-              <p>
-                <strong>Doctor's Response:</strong>{" "}
-                {rec.response ? rec.response : "Pending"}
-              </p>
-              <p>
-                <strong>Prescription:</strong>{" "}
-                {rec.prescription ? rec.prescription : "Pending"}
-              </p>
-              <p>
-                <strong>Date:</strong> {rec.date}
-              </p>
+
+              <p><strong>Issue / Symptoms:</strong> {rec.issue}</p>
+              <p><strong>Doctor's Response:</strong> {rec.response || "Pending"}</p>
+              <p><strong>Prescription:</strong> {rec.prescription || "Pending"}</p>
+              <p><strong>Date:</strong> {rec.date}</p>
             </div>
           ))
         )}
